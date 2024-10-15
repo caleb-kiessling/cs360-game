@@ -1,5 +1,5 @@
 # Ignore the metadata folder
-metadata/
+.metadata/
 
 ### Java template
 *.class
