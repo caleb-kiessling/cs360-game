@@ -1,0 +1,140 @@
+package application;
+
+import javafx.animation.AnimationTimer;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class Main extends Application {
+
+    private Rectangle spaceship;
+    private final double spaceshipSpeed = 5;
+    private ArrayList<Rectangle> projectiles = new ArrayList<>();
+    private ArrayList<Circle> asteroids = new ArrayList<>();
+    private Pane root;
+    private final double projectileSpeed = 7;
+    private final double asteroidSpeed = 2;
+    private long lastShotTime = 0;
+    private final long shootingCooldown = 500_000_000; // 500ms in nanoseconds
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        root = new Pane();
+        Scene scene = new Scene(root, 800, 600);
+
+        // Create spaceship
+        spaceship = new Rectangle(40, 20, Color.BLUE);
+        spaceship.setLayoutX(scene.getWidth() / 2 - 20);
+        spaceship.setLayoutY(scene.getHeight() - 50);
+
+        root.getChildren().add(spaceship);
+
+        // Handle key input for spaceship movement and shooting
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.LEFT && spaceship.getLayoutX() > 0) {
+                spaceship.setLayoutX(spaceship.getLayoutX() - spaceshipSpeed);
+            } else if (event.getCode() == KeyCode.RIGHT && spaceship.getLayoutX() < scene.getWidth() - spaceship.getWidth()) {
+                spaceship.setLayoutX(spaceship.getLayoutX() + spaceshipSpeed);
+            } else if (event.getCode() == KeyCode.SPACE) {
+                long currentTime = System.nanoTime();
+                if (currentTime - lastShotTime >= shootingCooldown) {
+                    shootProjectile();
+                    lastShotTime = currentTime;
+                }
+            }
+        });
+
+        // Game loop using AnimationTimer
+        AnimationTimer gameLoop = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                updateProjectiles();
+                spawnAsteroids();
+                updateAsteroids();
+                checkCollisions();
+            }
+        };
+
+        primaryStage.setTitle("Asteroid Shooter Game");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        gameLoop.start();
+    }
+
+    // Method to shoot projectiles from the spaceship
+    private void shootProjectile() {
+        Rectangle projectile = new Rectangle(5, 10, Color.RED);
+        projectile.setLayoutX(spaceship.getLayoutX() + spaceship.getWidth() / 2 - 2.5);
+        projectile.setLayoutY(spaceship.getLayoutY() - 10);
+        projectiles.add(projectile);
+        root.getChildren().add(projectile);
+    }
+
+    // Update the positions of projectiles
+    private void updateProjectiles() {
+        Iterator<Rectangle> iterator = projectiles.iterator();
+        while (iterator.hasNext()) {
+            Rectangle projectile = iterator.next();
+            projectile.setLayoutY(projectile.getLayoutY() - projectileSpeed);
+            if (projectile.getLayoutY() < 0) {
+                root.getChildren().remove(projectile);
+                iterator.remove();
+            }
+        }
+    }
+
+    // Spawn asteroids at random positions
+    private void spawnAsteroids() {
+        if (Math.random() < 0.02) { // Adjust spawn rate as needed
+            Circle asteroid = new Circle(15, Color.GRAY);
+            asteroid.setLayoutX(Math.random() * root.getWidth());
+            asteroid.setLayoutY(0);
+            asteroids.add(asteroid);
+            root.getChildren().add(asteroid);
+        }
+    }
+
+    // Update the positions of asteroids
+    private void updateAsteroids() {
+        Iterator<Circle> iterator = asteroids.iterator();
+        while (iterator.hasNext()) {
+            Circle asteroid = iterator.next();
+            asteroid.setLayoutY(asteroid.getLayoutY() + asteroidSpeed);
+            if (asteroid.getLayoutY() > root.getHeight()) {
+                root.getChildren().remove(asteroid);
+                iterator.remove();
+            }
+        }
+    }
+
+    // Check for collisions between projectiles and asteroids
+    private void checkCollisions() {
+        Iterator<Circle> asteroidIterator = asteroids.iterator();
+        while (asteroidIterator.hasNext()) {
+            Circle asteroid = asteroidIterator.next();
+            Iterator<Rectangle> projectileIterator = projectiles.iterator();
+            while (projectileIterator.hasNext()) {
+                Rectangle projectile = projectileIterator.next();
+                if (asteroid.getBoundsInParent().intersects(projectile.getBoundsInParent())) {
+                    root.getChildren().remove(asteroid);
+                    root.getChildren().remove(projectile);
+                    asteroidIterator.remove();
+                    projectileIterator.remove();
+                    break;
+                }
+            }
+        }
+    }
+}
