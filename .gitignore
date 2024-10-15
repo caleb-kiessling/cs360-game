@@ -1,22 +1,48 @@
-# Ignore the metadata folder
+# Ignore the metadata folder... this is my eclipse workspace..
 .metadata/
 
-### Java template
+# Maven build directories
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.properties
+
+# Eclipse files
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA files
+*.iml
+.idea/
+out/
 *.class
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# Gradle files (if applicable)
+.gradle/
+build/
 
-# Package Files #
-# *.jar
-# *.war
-# *.ear
+# Other files
+*.log
+*.tmp
+*.swp
+*.bak
+*~
+.DS_Store
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# Local configuration files
+*.local
 
-### JetBrains template
-*.iml
+# Java files
+*.class
+*.jar
 
-## Directory-based project format:
-.idea/
+# Maven specific files
+mvnw
+mvnw.cmd
+
+# Operating System files
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+

@@ -1,1 +1,1 @@
-Conversion to being a Java project.
+Game project that uses JavaFX.
