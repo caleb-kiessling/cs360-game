@@ -2,6 +2,8 @@ package application;
 	
 import java.io.IOException;
 
+import application.core.GameDataParser;
+import application.core.Level;
 import controllers.BaseController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,10 +15,15 @@ import javafx.scene.Scene;
 public class Main extends Application {
 	private Stage primaryStage;
 	private BaseController currentController;
+	private GameDataParser parser;
+	private Level currentLevel;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
 		try {
+			this.parser = new GameDataParser("levels.txt");
+			this.currentLevel = null;
+			
 			this.primaryStage = stage;
 			this.primaryStage.setTitle("Space ship");
 			//this.primaryStage.setFullScreen(true);
@@ -38,6 +45,18 @@ public class Main extends Application {
 		
 	    Scene scene = new Scene(loadFXML(fxml));
 	    this.primaryStage.setScene(scene);
+	}
+	
+	public void setLevel(Level level) {
+		this.currentLevel = level;
+	}
+	
+	public Level getLevel() {
+		return this.currentLevel;
+	}
+	
+	public GameDataParser getParser() {
+		return this.parser;
 	}
 	
     private Parent loadFXML(String fxml) throws IOException {
