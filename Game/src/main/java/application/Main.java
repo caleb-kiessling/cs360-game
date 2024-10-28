@@ -52,7 +52,7 @@ public class Main extends Application {
 	}
 	
 	public Level getLevel() {
-		return this.currentLevel;
+		return this.currentLevel; // call this to get level data in the GameController.
 	}
 	
 	public GameDataParser getParser() {
