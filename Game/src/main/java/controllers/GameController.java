@@ -54,11 +54,6 @@ public class GameController extends BaseController {
 
     @Override
     public void start() {
-    	
-    }
-    
-    @Override
-    public void initialize() {
         this.gameLoop = new GameLoop();
         setupKeyHandler();
         gameLoop.start();

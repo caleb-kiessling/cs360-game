@@ -23,7 +23,7 @@ public class LevelSelectController extends BaseController {
     }
     
     @Override
-    public void initialize() {
+    public void start() {
         loadLevels();
     }
 

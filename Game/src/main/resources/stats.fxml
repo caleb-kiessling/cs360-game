@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox id="background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.StatsController">
+   <children>
+      <Label stylesheets="@style.css" text="STATISTICS">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" stylesheets="@style.css">
+         <children>
+            <Label id="stats" fx:id="winLabel" stylesheets="@style.css" text="WINS: ">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+            <Label id="stats" fx:id="lossLabel" stylesheets="@style.css" text="LOSSES: ">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+            <Label id="stats" fx:id="correctLabel" stylesheets="@style.css" text="ANSWERED CORRECTLY:">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+            <Label id="stats" fx:id="destroyedLabel" stylesheets="@style.css" text="ASTEROIDS DESTROYED:">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Button fx:id="BackButton" mnemonicParsing="false" onAction="#ReturnToMenu" stylesheets="@style.css" text="MENU">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+   </children>
+</VBox>

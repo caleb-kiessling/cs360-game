@@ -16,10 +16,6 @@ public class MenuController extends BaseController {
     private Button StatsButton;
 
     @Override
-    public void initialize() {
-    }
-
-    @Override
     public void start() {
     }
 
@@ -30,7 +26,7 @@ public class MenuController extends BaseController {
 
     @FXML
     void SwitchSceneStatistics(ActionEvent event) {
-        //switchScene("statistics"); // this doesnt exist right now.
+        switchScene("stats"); // this doesnt exist right now.
     }
 
     @FXML
