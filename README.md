@@ -5,4 +5,4 @@ On Eclipse IDE:
 
 You have to run the game from the `Launcher` class otherwise it doesn't work.
 
-In the current state, it should display a small white window when ran.
+You may have to update the maven project and such to get it to work.
