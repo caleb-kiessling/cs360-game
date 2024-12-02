@@ -1,5 +1,7 @@
 package controllers;
 
+import java.awt.event.KeyListener;
+
 import application.core.GameLoop;
 import application.core.GameObject;
 import application.entities.Spaceship;
@@ -7,8 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
-public class GameController extends BaseController {
+public class GameController extends BaseController implements KeyListener {
 	private int score = 0;
 	
     private GameLoop gameLoop;
@@ -57,6 +60,11 @@ public class GameController extends BaseController {
         this.gameLoop = new GameLoop();
         setupKeyHandler();
         gameLoop.start();
+        player = new Spaceship();
+        player.setXY(50.0, 50.0);
+        GameContent.getChildren().add(player.getVisual());
+        
+        //.addKeyListener();
     }
     
     @Override
@@ -64,4 +72,22 @@ public class GameController extends BaseController {
         gameLoop.stop();
         gameLoop = null;
     }
+
+	@Override
+	public void keyTyped(java.awt.event.KeyEvent e) {
+		// TODO Auto-generated method stub
+    	System.out.println("key pressed");
+	}
+
+	@Override
+	public void keyPressed(java.awt.event.KeyEvent e) {
+		// TODO Auto-generated method stub
+    	System.out.println("key pressed");
+	}
+
+	@Override
+	public void keyReleased(java.awt.event.KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
