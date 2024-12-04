@@ -1,10 +1,14 @@
 package application.entities;
 
 import application.core.*;
+<<<<<<< Updated upstream
 import javafx.scene.Node;
+=======
+import javafx.scene.layout.Region;
+>>>>>>> Stashed changes
 import javafx.scene.shape.Rectangle;
 
-public class Spaceship implements GameObject{
+public class Spaceship extends Region implements GameObject{
 	private Rectangle visual;
 	private double speed = 100.0;
 	
@@ -14,6 +18,8 @@ public class Spaceship implements GameObject{
 	
 	public Spaceship() {
 		this.visual = new Rectangle(30.0, 15.0);
+		this.visual.fillProperty();
+		this.visual.setVisible(true);
 	}
 	
 	@Override

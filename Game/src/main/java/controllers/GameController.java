@@ -59,6 +59,17 @@ public class GameController extends BaseController implements KeyListener {
     public void start() {
         this.gameLoop = new GameLoop();
         setupKeyHandler();
+        
+        System.out.print("GameCOntroller initialize()");
+        System.out.print(GameContent.getChildren().size());
+        player = new Spaceship();
+        GameContent.getChildren().add(player);
+        int playerIndex = GameContent.getChildren().indexOf(player);
+        GameContent.getChildren().get(playerIndex).setLayoutX(20);
+        GameContent.getChildren().get(playerIndex).setLayoutY(20);
+        GameContent.getChildren().get(playerIndex).setVisible(true);
+        GameContent.setVisible(true);
+        
         gameLoop.start();
         player = new Spaceship();
         player.setXY(50.0, 50.0);

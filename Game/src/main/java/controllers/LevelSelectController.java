@@ -15,14 +15,18 @@ public class LevelSelectController extends BaseController {
 
     @FXML
     private HBox Contents;
-
+    
     @FXML
     void ReturnToMenu(ActionEvent event) throws Exception {
     	this.switchScene("menu");
     }
     
     @FXML
+<<<<<<< Updated upstream
     void PlayLevel(ActionEvent event) throws Exception {
+=======
+    void playGame(ActionEvent event) throws Exception {
+>>>>>>> Stashed changes
     	this.switchScene("game_area");
     }
 
