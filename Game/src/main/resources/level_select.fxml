@@ -7,30 +7,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<<<<<<< Updated upstream
-<VBox id="background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LevelSelectController">
-=======
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LevelSelectController">
->>>>>>> Stashed changes
-   <children>
-      <Label stylesheets="@style.css" text="LEVEL NAME">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </Label>
-      <HBox fx:id="Contents" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-         <children>
-<<<<<<< Updated upstream
-            <Button fx:id="PlayButton" mnemonicParsing="false" onAction="#PlayLevel" text="Play" />
-         </children></HBox>
-      <Button fx:id="BackButton" mnemonicParsing="false" onAction="#ReturnToMenu" stylesheets="@style.css" text="MENU">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets></Button>
-=======
-            <Button fx:id="PlayButton" mnemonicParsing="false" onAction="#playGame" text="Play" />
-         </children></HBox>
-      <Button fx:id="BackButton" mnemonicParsing="false" onAction="#ReturnToMenu" text="Back" />
->>>>>>> Stashed changes
-   </children>
+<VBox id="background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LevelSelectController" stylesheets="@style.css">
+    <children>
+        <Label text="LEVEL NAME">
+            <font>
+                <Font size="29.0" />
+            </font>
+        </Label>
+        <HBox fx:id="Contents" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <children>
+                <Button fx:id="PlayButton" mnemonicParsing="false" onAction="#PlayLevel" text="Play" />
+            </children>
+        </HBox>
+        <Button fx:id="BackButton" mnemonicParsing="false" onAction="#ReturnToMenu" text="MENU">
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+        </Button>
+    </children>
 </VBox>
+

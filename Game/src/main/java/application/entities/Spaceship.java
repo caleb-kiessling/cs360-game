@@ -1,11 +1,11 @@
 package application.entities;
 
 import application.core.*;
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 import javafx.scene.Node;
-=======
+//=======
 import javafx.scene.layout.Region;
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 import javafx.scene.shape.Rectangle;
 
 public class Spaceship extends Region implements GameObject{

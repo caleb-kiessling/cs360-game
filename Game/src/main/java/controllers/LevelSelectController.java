@@ -22,11 +22,13 @@ public class LevelSelectController extends BaseController {
     }
     
     @FXML
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
     void PlayLevel(ActionEvent event) throws Exception {
-=======
+    
+    }
+//=======
     void playGame(ActionEvent event) throws Exception {
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
     	this.switchScene("game_area");
     }
 
