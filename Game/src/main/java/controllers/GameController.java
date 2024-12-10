@@ -25,6 +25,42 @@ public class GameController extends BaseController implements KeyListener {
 
     @FXML
     private Label AmmoLabel;
+    
+//Set up key listener on initialization
+    @FXML
+	public void initialize() {
+    	GameContent.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.setOnKeyPressed(this::moveShip);
+            }
+        });
+    	
+	}
+    //method for moving the ship. Currently does not function correctly
+    @FXML
+    void moveShip(KeyEvent e) {
+    	double x = player.getLayoutX();
+        double y = player.getLayoutY();
+        double step=20;
+        //used for debugging will show key pressed and coordinate but ship visually does not move to the coordinate
+        System.out.println("Key pressed: " + e.getCode()); // Check key event
+        System.out.println("Before move: X=" + x + ", Y=" + y);
+
+        if (e.getCode() == KeyCode.UP) {
+            player.setLayoutY(y - step);
+        }
+        if (e.getCode() == KeyCode.DOWN) {
+            player.setLayoutY(y + step);
+        }
+        if (e.getCode() == KeyCode.LEFT) {
+            player.setLayoutX(x - step);
+        }
+        if (e.getCode() == KeyCode.RIGHT) {
+            player.setLayoutX(x + step);
+        }
+        System.out.println("After move: X=" + player.getLayoutX() + ", Y=" + player.getLayoutY());
+
+   }
  
     public void addGameObject(GameObject gameObject) {
         gameLoop.addGameObject(gameObject);
@@ -72,12 +108,12 @@ public class GameController extends BaseController implements KeyListener {
         
         gameLoop.start();
         player = new Spaceship();
-        player.setXY(50.0, 50.0);
+        player.setXY(300.0, 300.0);
         GameContent.getChildren().add(player.getVisual());
         
         //.addKeyListener();
     }
-    
+  
     @Override
     public void clean() {
         gameLoop.stop();

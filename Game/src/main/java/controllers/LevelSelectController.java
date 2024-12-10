@@ -24,7 +24,7 @@ public class LevelSelectController extends BaseController {
     @FXML
 //<<<<<<< Updated upstream
     void PlayLevel(ActionEvent event) throws Exception {
-    
+    this.switchScene("game_area");
     }
 //=======
     void playGame(ActionEvent event) throws Exception {
