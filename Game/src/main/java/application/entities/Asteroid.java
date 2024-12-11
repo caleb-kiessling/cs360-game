@@ -40,7 +40,7 @@ public void setLayoutXY(double x, double y) {
 @Override
 public Bounds getBoundInParent() {
 	
-	return circle.getBoundsInParent();
+	return stackpane.getBoundsInParent();
 }
 
 }

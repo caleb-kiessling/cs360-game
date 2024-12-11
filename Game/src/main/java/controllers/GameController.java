@@ -36,37 +36,32 @@ public class GameController extends BaseController implements KeyListener {
     private int ammo;
     
     
-    private GameLoop gameloop;
-    
-//Set up key listener on initialization
     @FXML
-	public void initialize() {
-    	gameloop=new GameLoop();
+    @Override
+    public void start() {
+    	gameLoop=new GameLoop(GameContent);
     	ammo=5;
     	AmmoLabel.setText("["+ammo+"] SHOTS");
     	player = new Spaceship();
         GameContent.getChildren().add(player.getVisual());
         player.setXY(300,300);
+        gameLoop.addGameObject(player);
     	GameContent.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 newScene.setOnKeyPressed(this::moveShip);
             }
         });
     	asteroidFall();
-    	gameloop.start();
-    	
-    	
-    	
-	}
+    	gameLoop.start();
+    	gameLoop.resume();
+    }
+    
     //method for ship actions and key events
     @FXML
     void moveShip(KeyEvent e) {
     	double x = player.getVisual().getLayoutX();
         double y = player.getVisual().getLayoutY();
         double step=15;
-        //used for debugging will show key pressed and coordinate
-        //System.out.println("Key pressed: " + e.getCode()); // Check key event
-       // System.out.println("Before move: X=" + x + ", Y=" + y);
 
         if (e.getCode() == KeyCode.UP) {
             player.getVisual().setLayoutY(y - step);
@@ -84,25 +79,22 @@ public class GameController extends BaseController implements KeyListener {
             shoot();
         }
         
-       // System.out.println("After move: X=" + player.getVisual().getLayoutX() + ", Y=" + player.getVisual().getLayoutY());
 
    }
     //method that creates that shape for bullet and play animation of bullet firing
     @FXML
     void shoot() {
     	if(ammo>0) {
-    		//ammo--;
+    		ammo--;
         	AmmoLabel.setText("["+ammo+"] SHOTS");
         	Bullet bullet=new Bullet();
             GameContent.getChildren().add(bullet.getVisual());
             bullet.getVisual().setX(300);//setX and setY need to be the same as ship to spawn in it
             bullet.getVisual().setY(300);
-            bullet.getVisual().setLayoutX(player.getVisual().getLayoutX());
+            bullet.getVisual().setLayoutX(player.getVisual().getLayoutX()+15);
             bullet.getVisual().setLayoutY(player.getVisual().getLayoutY());
-            //print statement for debugging
-        //    System.out.println("Bullet at: X=" + bullet.getVisual().getLayoutX() + ", Bullet at:" + bullet.getVisual().getLayoutY());
             
-            gameloop.addGameObject(bullet);
+            gameLoop.addGameObject(bullet);
             //animation of bullet
             TranslateTransition shootBullet=new TranslateTransition();
             shootBullet.setDuration(Duration.seconds(2)); // Animation duration
@@ -112,6 +104,7 @@ public class GameController extends BaseController implements KeyListener {
             shootBullet.setAutoReverse(false); // Reverse direction after each cycle
             shootBullet.setOnFinished(event -> {//used to destroy bullet object once animation is finished
             	GameContent.getChildren().remove(bullet.getVisual());
+            	gameLoop.removeGameObject(bullet);
             });
 
             // Start the animation
@@ -126,10 +119,10 @@ public class GameController extends BaseController implements KeyListener {
     	GameContent.getChildren().add(a.getVisual());
     	a.setLayoutXY(300,0);
     	
-    	gameloop.addGameObject(a);
+    	gameLoop.addGameObject(a);
     	 //animation of asteroid
         TranslateTransition asteroidFall=new TranslateTransition();
-        asteroidFall.setDuration(Duration.seconds(100)); // Animation duration
+        asteroidFall.setDuration(Duration.seconds(20)); // Animation duration
         asteroidFall.setNode(a.getVisual()); // The node to animate
         asteroidFall.setByY(100); // Move 1000px up
         asteroidFall.setCycleCount(1); // play animation once
@@ -169,29 +162,7 @@ public class GameController extends BaseController implements KeyListener {
         ScoreLabel.setText("Score: " + score);
         AmmoLabel.setText("Ammo: " + ammo);
     }
-
-    @Override
-    public void start() {
-        this.gameLoop = new GameLoop();
-        setupKeyHandler();
-        
-        System.out.print("GameCOntroller initialize()");
-        System.out.print(GameContent.getChildren().size());
-        //player = new Spaceship();
-       // GameContent.getChildren().add(player);
-      //  int playerIndex = GameContent.getChildren().indexOf(player);
-        //GameContent.getChildren().get(playerIndex).setLayoutX(20);
-       // GameContent.getChildren().get(playerIndex).setLayoutY(20);
-       // GameContent.getChildren().get(playerIndex).setVisible(true);
-        GameContent.setVisible(true);
-        
-        gameLoop.start();
-      //  player = new Spaceship();
-      //  player.setXY(300.0, 300.0);
-       // GameContent.getChildren().add(player.getVisual());
-        
-        //.addKeyListener();
-    }
+   
   
     @Override
     public void clean() {

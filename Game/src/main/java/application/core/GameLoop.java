@@ -7,13 +7,15 @@ import application.entities.Asteroid;
 import application.entities.Bullet;
 import application.entities.Spaceship;
 import javafx.animation.AnimationTimer;
+import javafx.scene.layout.Pane;
 
 public class GameLoop {	
 	private ArrayList<GameObject> gameObjects = new ArrayList<>();
 	private boolean paused = true; // support pausing.
 	private AnimationTimer timer;
-	
-	public GameLoop() {
+	Pane gamepane;
+	public GameLoop(Pane gamepane) {
+		this.gamepane=gamepane;
 		timer = new AnimationTimer() {
 			private long lastUpdate = System.nanoTime();
 			
@@ -30,8 +32,14 @@ public class GameLoop {
 	}
 	
 	public void start() {
-		this.timer.start();
+		if(this.timer==null) {
+			System.out.println("null timer");
+		}else {
+		 this.timer.start();
+
+		}
 	}
+	
 	
 	public void stop() {
 		this.timer.stop();
@@ -74,21 +82,24 @@ public class GameLoop {
                 if (obj1.getBoundInParent().intersects(obj2.getBoundInParent())) {
                     // Handle the collision
                     handleCollision(obj1, obj2);
+                    
                 }
             }
         }
 	}
 	private void handleCollision(GameObject obj1, GameObject obj2) {
         // Custom collision handling logic
-        if (obj1 instanceof Bullet && obj2 instanceof Asteroid) {
+        if ((obj1 instanceof Bullet && obj2 instanceof Asteroid)||(obj2 instanceof Bullet && obj1 instanceof Asteroid)) {
             // Destroy both bullet and asteroid
             removeGameObject(obj1);
             removeGameObject(obj2);
+            gamepane.getChildren().removeAll(obj1.getVisual(),obj2.getVisual());
             System.out.println("Asteroid shot");
-        } else if (obj1 instanceof Asteroid && obj2 instanceof Spaceship) {
+        } else if ((obj1 instanceof Asteroid && obj2 instanceof Spaceship)||(obj2 instanceof Asteroid && obj1 instanceof Spaceship)) {
             // End the game if asteroid hits the player
             System.out.println("Game Over!");
             stop(); // Stop the game loop
+            
         }
         // Add other collision scenarios here
     }
