@@ -3,6 +3,9 @@ package application.core;
 import java.util.ArrayList;
 //import java.util.List;
 
+import application.entities.Asteroid;
+import application.entities.Bullet;
+import application.entities.Spaceship;
 import javafx.animation.AnimationTimer;
 
 public class GameLoop {	
@@ -20,6 +23,7 @@ public class GameLoop {
 				lastUpdate = now;
 				if (!paused) {
 					updateGameObjects(dt);
+					checkCollisions();
 				}
 			}
 		};
@@ -58,5 +62,35 @@ public class GameLoop {
 			gameObject.update(dt);
 		}
 	}
+	
+	public void checkCollisions() {
+		for (int i = 0; i < gameObjects.size(); i++) {
+            GameObject obj1 = gameObjects.get(i);
+
+            for (int j = i + 1; j < gameObjects.size(); j++) {
+                GameObject obj2 = gameObjects.get(j);
+
+                // Check if objects collide
+                if (obj1.getBoundInParent().intersects(obj2.getBoundInParent())) {
+                    // Handle the collision
+                    handleCollision(obj1, obj2);
+                }
+            }
+        }
+	}
+	private void handleCollision(GameObject obj1, GameObject obj2) {
+        // Custom collision handling logic
+        if (obj1 instanceof Bullet && obj2 instanceof Asteroid) {
+            // Destroy both bullet and asteroid
+            removeGameObject(obj1);
+            removeGameObject(obj2);
+            System.out.println("Asteroid shot");
+        } else if (obj1 instanceof Asteroid && obj2 instanceof Spaceship) {
+            // End the game if asteroid hits the player
+            System.out.println("Game Over!");
+            stop(); // Stop the game loop
+        }
+        // Add other collision scenarios here
+    }
 	
 }

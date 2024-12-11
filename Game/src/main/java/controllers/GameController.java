@@ -1,9 +1,13 @@
 package controllers;
 
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import application.core.GameLoop;
 import application.core.GameObject;
+import application.entities.Asteroid;
+import application.entities.Bullet;
 import application.entities.Spaceship;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
@@ -31,9 +35,13 @@ public class GameController extends BaseController implements KeyListener {
     
     private int ammo;
     
+    
+    private GameLoop gameloop;
+    
 //Set up key listener on initialization
     @FXML
 	public void initialize() {
+    	gameloop=new GameLoop();
     	ammo=5;
     	AmmoLabel.setText("["+ammo+"] SHOTS");
     	player = new Spaceship();
@@ -44,8 +52,9 @@ public class GameController extends BaseController implements KeyListener {
                 newScene.setOnKeyPressed(this::moveShip);
             }
         });
-    	System.out.print(GameContent.getChildren());
-    	System.out.print(player.getParent());
+    	asteroidFall();
+    	gameloop.start();
+    	
     	
     	
 	}
@@ -75,32 +84,34 @@ public class GameController extends BaseController implements KeyListener {
             shoot();
         }
         
-        System.out.println("After move: X=" + player.getVisual().getLayoutX() + ", Y=" + player.getVisual().getLayoutY());
+       // System.out.println("After move: X=" + player.getVisual().getLayoutX() + ", Y=" + player.getVisual().getLayoutY());
 
    }
     //method that creates that shape for bullet and play animation of bullet firing
     @FXML
     void shoot() {
     	if(ammo>0) {
-    		ammo--;
+    		//ammo--;
         	AmmoLabel.setText("["+ammo+"] SHOTS");
-        	Rectangle bullet=new Rectangle(5,20);
-            GameContent.getChildren().add(bullet);
-            bullet.setX(300);//setX and setY need to be the same as ship to spawn in it
-            bullet.setY(300);
-            bullet.setLayoutX(player.getVisual().getLayoutX());
-            bullet.setLayoutY(player.getVisual().getLayoutY());
+        	Bullet bullet=new Bullet();
+            GameContent.getChildren().add(bullet.getVisual());
+            bullet.getVisual().setX(300);//setX and setY need to be the same as ship to spawn in it
+            bullet.getVisual().setY(300);
+            bullet.getVisual().setLayoutX(player.getVisual().getLayoutX());
+            bullet.getVisual().setLayoutY(player.getVisual().getLayoutY());
             //print statement for debugging
-            System.out.println("Bullet at: X=" + bullet.getLayoutX() + ", Bullet at:" + bullet.getLayoutY());
+        //    System.out.println("Bullet at: X=" + bullet.getVisual().getLayoutX() + ", Bullet at:" + bullet.getVisual().getLayoutY());
+            
+            gameloop.addGameObject(bullet);
             //animation of bullet
             TranslateTransition shootBullet=new TranslateTransition();
             shootBullet.setDuration(Duration.seconds(2)); // Animation duration
-            shootBullet.setNode(bullet); // The node to animate
+            shootBullet.setNode(bullet.getVisual()); // The node to animate
             shootBullet.setByY(-1000); // Move 1000px up
             shootBullet.setCycleCount(1); // play animation once
             shootBullet.setAutoReverse(false); // Reverse direction after each cycle
             shootBullet.setOnFinished(event -> {//used to destroy bullet object once animation is finished
-            	GameContent.getChildren().remove(bullet);
+            	GameContent.getChildren().remove(bullet.getVisual());
             });
 
             // Start the animation
@@ -109,6 +120,26 @@ public class GameController extends BaseController implements KeyListener {
     	
 
     }
+    
+    public void asteroidFall() {
+    	Asteroid a=new Asteroid("answer");
+    	GameContent.getChildren().add(a.getVisual());
+    	a.setLayoutXY(300,0);
+    	
+    	gameloop.addGameObject(a);
+    	 //animation of asteroid
+        TranslateTransition asteroidFall=new TranslateTransition();
+        asteroidFall.setDuration(Duration.seconds(100)); // Animation duration
+        asteroidFall.setNode(a.getVisual()); // The node to animate
+        asteroidFall.setByY(100); // Move 1000px up
+        asteroidFall.setCycleCount(1); // play animation once
+        asteroidFall.setAutoReverse(false); // Reverse direction after each cycle
+        asteroidFall.setOnFinished(event -> {//used to destroy bullet object once animation is finished
+        	GameContent.getChildren().remove(a.getVisual());
+        });
+        asteroidFall.play();
+    }
+    
  
     public void addGameObject(GameObject gameObject) {
         gameLoop.addGameObject(gameObject);

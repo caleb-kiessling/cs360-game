@@ -1,6 +1,7 @@
 package application.entities;
 
 import application.core.*;
+import javafx.geometry.Bounds;
 //<<<<<<< Updated upstream
 import javafx.scene.Node;
 //=======
@@ -26,6 +27,10 @@ public class Spaceship extends Region implements GameObject{
 	public void update(double deltaTime) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public Bounds getBoundInParent() {
+		return visual.getBoundsInParent();
 	}
 	
 	public Rectangle getVisual() {
