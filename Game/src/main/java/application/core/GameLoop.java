@@ -13,9 +13,12 @@ public class GameLoop {
 	private ArrayList<GameObject> gameObjects = new ArrayList<>();
 	private boolean paused = true; // support pausing.
 	private AnimationTimer timer;
-	Pane gamepane;
+	private Pane gamepane;
+    private GameEventListener listener;
+
 	public GameLoop(Pane gamepane) {
 		this.gamepane=gamepane;
+		
 		timer = new AnimationTimer() {
 			private long lastUpdate = System.nanoTime();
 			
@@ -30,6 +33,10 @@ public class GameLoop {
 			}
 		};
 	}
+	
+	public void setGameEventListener(GameEventListener listener) {
+        this.listener = listener;
+    }
 	
 	public void start() {
 		if(this.timer==null) {
@@ -91,6 +98,25 @@ public class GameLoop {
         // Custom collision handling logic
         if ((obj1 instanceof Bullet && obj2 instanceof Asteroid)||(obj2 instanceof Bullet && obj1 instanceof Asteroid)) {
             // Destroy both bullet and asteroid
+        	if(obj2 instanceof Asteroid) {
+        		if(((Asteroid) obj2).getAnswer().isCorrect()) {
+        			System.out.println("correct");
+        			if (listener != null) {
+                        listener.onCorrectAnswerShot(); // Notify the controller
+                    }
+        		}else {
+        			System.out.println("not correct");
+        		}
+        	}else if(obj1 instanceof Asteroid) {
+        		if(((Asteroid) obj1).getAnswer().isCorrect()) {
+        			System.out.println("correct");
+        			if (listener != null) {
+                        listener.onCorrectAnswerShot(); // Notify the controller
+                    }
+        		}else {
+        			System.out.println("not correct");
+        		}
+        	}
             removeGameObject(obj1);
             removeGameObject(obj2);
             gamepane.getChildren().removeAll(obj1.getVisual(),obj2.getVisual());

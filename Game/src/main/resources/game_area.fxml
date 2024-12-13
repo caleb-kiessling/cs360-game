@@ -9,7 +9,10 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameController">
    <children>
-      <Pane fx:id="GameContent" onKeyPressed="#moveShip" prefHeight="400.0" prefWidth="600.0" />
+      <Pane fx:id="GameContent" onKeyPressed="#moveShip" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Label fx:id="QLabel" layoutX="48.0" layoutY="35.0" text="Label" />
+         </children></Pane>
       <Label fx:id="ScoreLabel" alignment="CENTER_RIGHT" layoutX="432.0" layoutY="371.0" prefHeight="27.0" prefWidth="168.0" text="Label" textAlignment="CENTER">
          <font>
             <Font size="18.0" />

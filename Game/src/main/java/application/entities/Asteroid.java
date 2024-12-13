@@ -1,5 +1,6 @@
 package application.entities;
 
+import application.core.Answer;
 import application.core.GameObject;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Label;
@@ -10,14 +11,15 @@ public class Asteroid implements GameObject{
 private Circle circle;
 private Label label;
 private StackPane stackpane;
+private Answer answer;
 
-public Asteroid(String answer) {
+public Asteroid(Answer answer) {
 	circle= new Circle(50);
-	label= new Label(answer);
+	label= new Label(answer.getText());
 	label.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;");
 	stackpane=new StackPane();
 	stackpane.getChildren().addAll(circle,label);
-	
+	this.answer=answer;
 	
 }
 public StackPane getVisual() {
@@ -36,6 +38,9 @@ public void setLayoutXY(double x, double y) {
 	this.stackpane.setLayoutX(x);
 	this.stackpane.setLayoutY(y);
 
+}
+public Answer getAnswer() {
+	return this.answer;
 }
 @Override
 public Bounds getBoundInParent() {
