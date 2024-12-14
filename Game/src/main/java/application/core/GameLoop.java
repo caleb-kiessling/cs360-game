@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 public class GameLoop {	
 	private ArrayList<GameObject> gameObjects = new ArrayList<>();
 	private boolean paused = true; // support pausing.
+	private boolean collisionPause;
 	private AnimationTimer timer;
 	private Pane gamepane;
     private GameEventListener listener;
@@ -21,14 +22,17 @@ public class GameLoop {
 		
 		timer = new AnimationTimer() {
 			private long lastUpdate = System.nanoTime();
-			
+
 			@Override
 			public void handle(long now) {
 				double dt = (now - lastUpdate) / 1000000000;
 				lastUpdate = now;
 				if (!paused) {
 					updateGameObjects(dt);
-					checkCollisions();
+					if(!collisionPause) {
+						checkCollisions();
+
+					}
 				}
 			}
 		};
@@ -77,6 +81,30 @@ public class GameLoop {
 			gameObject.update(dt);
 		}
 	}
+	public ArrayList<Asteroid> getAsteroids() {
+		ArrayList<Asteroid>a=new ArrayList<>();
+		for(GameObject object: this.gameObjects) {
+			if(object instanceof Asteroid) {
+				a.add((Asteroid)object);
+			}
+		}
+		return a;
+	}
+	private void pauseCollision(int seconds) {
+		// Pause the game loop for 3 seconds
+	   // Assuming your game loop has a pause() method
+		this.collisionPause=true;
+		new Thread(() -> {
+		    try {
+		        Thread.sleep(seconds*1000);  // Wait for seconds
+		    } catch (InterruptedException e) {
+		        e.printStackTrace();
+		    } finally {
+		        this.collisionPause=false;  // Resume the game loop after seconds
+		    }
+		}).start();
+
+	}
 	
 	public void checkCollisions() {
 		for (int i = 0; i < gameObjects.size(); i++) {
@@ -123,7 +151,8 @@ public class GameLoop {
             System.out.println("Asteroid shot");
         } else if ((obj1 instanceof Asteroid && obj2 instanceof Spaceship)||(obj2 instanceof Asteroid && obj1 instanceof Spaceship)) {
             // End the game if asteroid hits the player
-            System.out.println("ship hit");
+        	this.pauseCollision(3);
+        	listener.onShipAsteroidCollision();
            // stop(); // Stop the game loop
             
         }

@@ -17,6 +17,7 @@ import application.core.LevelControl;
 import application.entities.Asteroid;
 import application.entities.Bullet;
 import application.entities.Spaceship;
+import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -44,7 +45,14 @@ public class GameController extends BaseController implements KeyListener, GameE
     @FXML
     private Label QLabel;
     
+    @FXML
+    private Label HealthLabel;
+    
+    @FXML
+    private Rectangle killBorder;
+    
     private int ammo;
+    private int health;
     private LevelControl lvlControl;
     private List<TranslateTransition> asteroidTransitions = new ArrayList<>();
 
@@ -55,12 +63,19 @@ public class GameController extends BaseController implements KeyListener, GameE
     	lvlControl=new LevelControl();
     	gameLoop=new GameLoop(GameContent);
         gameLoop.setGameEventListener(this); // Set the listener
+        
+        
+        
     	ammo=5;
-    	AmmoLabel.setText("["+ammo+"] SHOTS");
+    	health=3;
+    	score=0;
+		updateHUD(score,ammo,health);
+		
     	player = new Spaceship();
         GameContent.getChildren().add(player.getVisual());
         player.setXY(300,300);
         gameLoop.addGameObject(player);
+        
     	GameContent.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 newScene.setOnKeyPressed(this::moveShip);
@@ -99,17 +114,8 @@ public class GameController extends BaseController implements KeyListener, GameE
         	}
         }
         if(e.getCode()==KeyCode.P) {
-        	if(gameLoop.isPaused()) {
-        		gameLoop.resume();
-        		for (TranslateTransition transition : asteroidTransitions) {
-        	        transition.play();
-        	    }
-        	}else {
-        		gameLoop.pause();
-        		for (TranslateTransition transition : asteroidTransitions) {
-        	        transition.pause();
-        	    }
-        	}
+        	togglePause();
+        	
         }
         
 
@@ -156,7 +162,7 @@ public class GameController extends BaseController implements KeyListener, GameE
         for (int i = 0; i < answers.size(); i++) {
             Asteroid asteroid = createAsteroid(answers.get(i), asteroids);
             asteroids.add(asteroid); // Add the new asteroid to the list
-            asteroidFall(asteroid);
+            asteroidAnimation(asteroid);
         }
      
     }
@@ -187,6 +193,7 @@ public class GameController extends BaseController implements KeyListener, GameE
 
             // Set the tentative position
             a.setLayoutXY(x, y);
+            a.setStartxy(x, y);
 
             // Check for intersection with existing asteroids
             validPosition = true;
@@ -212,7 +219,7 @@ public class GameController extends BaseController implements KeyListener, GameE
 
 
     
-    public void asteroidFall(Asteroid a) {
+    public void asteroidAnimation(Asteroid a) {
     	 //animation of asteroid
         TranslateTransition asteroidFall=new TranslateTransition();
         asteroidFall.setDuration(Duration.seconds(30)); // Animation duration
@@ -221,11 +228,15 @@ public class GameController extends BaseController implements KeyListener, GameE
         asteroidFall.setCycleCount(1); // play animation once
         asteroidFall.setAutoReverse(false); // Reverse direction after each cycle
         asteroidFall.setOnFinished(event -> {//used to destroy asteroid object once animation is finished
+        	if(a.getAnswer().isCorrect()) {
+            	restartQuestion();//restarts question if correct answer is not shot
+            }
         	GameContent.getChildren().remove(a.getVisual());
         	removeGameObject(a);
         });
         asteroidTransitions.add(asteroidFall);
         asteroidFall.play();
+        
     }
     
  
@@ -246,16 +257,23 @@ public class GameController extends BaseController implements KeyListener, GameE
     }
 
     private void togglePause() {
-        if (gameLoop.isPaused()) {
-            gameLoop.resume();
-        } else {
-            gameLoop.pause();
-        }
+    	if(gameLoop.isPaused()) {
+    		gameLoop.resume();
+    		for (TranslateTransition transition : asteroidTransitions) {
+    			transition.play();
+    		}
+    	}else {
+    		gameLoop.pause();
+    		for (TranslateTransition transition : asteroidTransitions) {
+    			transition.pause();
+    		}
+    	}
     }
 
-    public void updateHUD(int score, int ammo) {
+    public void updateHUD(int score, int ammo, int health) {
         ScoreLabel.setText("Score: " + score);
         AmmoLabel.setText("Ammo: " + ammo);
+        HealthLabel.setText("Health: "+health);
     }
    
   
@@ -285,12 +303,49 @@ public class GameController extends BaseController implements KeyListener, GameE
 
 	@Override
 	public void onCorrectAnswerShot() {
-
-		if (lvlControl.getQuestionCount() < lvlControl.getCurrentLevel().getQuestions().size()) {
-			System.out.println("Loading the next question...");
-			lvlControl.nextQuestion();
-			loadQuestion();
-		}
 		ammo++;
+		score+=10;
+		System.out.println("Loading the next question...");
+		lvlControl.nextQuestion();
+		updateHUD(score,ammo,health);
+		loadQuestion();
+	}
+	public void onShipAsteroidCollision() {
+		if(health>0) {
+			int fadeDuration=3;
+			//change fadeDuration to match invulnerable time 
+			FadeTransition fadeOut = new FadeTransition(Duration.seconds(fadeDuration/ 2), player.getVisual());
+		    fadeOut.setFromValue(1);
+		    fadeOut.setToValue(0);
+		    fadeOut.setAutoReverse(true);
+		    fadeOut.setCycleCount(3 * 2);  // Each flicker has two transitions (fade in and out)
+		    fadeOut.play();
+			health--;
+			System.out.println("Ship has taken Damage");
+			updateHUD(score,ammo,health);
+			
+		}else{
+			System.out.println("Gameover");
+			System.exit(0);
+		}
+	}
+	public void restartQuestion() {
+	    // Stop all asteroid animations
+	    for (TranslateTransition transition : asteroidTransitions) {
+	        transition.stop();
+	    }
+	    asteroidTransitions.clear(); // Clear all transitions
+
+	    // Remove all asteroids from the game
+	    ArrayList<Asteroid> asteroids = gameLoop.getAsteroids();
+	    for (Asteroid a : asteroids) {
+	        GameContent.getChildren().remove(a.getVisual());
+	        removeGameObject(a);
+	    }
+	    asteroids.clear(); // Clear the asteroid list in the game loop
+
+	    // Reload the question
+	    loadQuestion();
 	}
 }
+

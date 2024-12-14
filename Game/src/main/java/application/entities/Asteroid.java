@@ -12,6 +12,8 @@ private Circle circle;
 private Label label;
 private StackPane stackpane;
 private Answer answer;
+private double startx;
+private double starty;
 
 public Asteroid(Answer answer) {
 	circle= new Circle(50);
@@ -34,10 +36,20 @@ public void setXY(double x, double y) {
 	this.stackpane.setScaleY(y);
 
 }
+public void setStartxy(double x, double y) {
+	this.startx=x;
+	this.starty=y;
+}
 public void setLayoutXY(double x, double y) {
 	this.stackpane.setLayoutX(x);
 	this.stackpane.setLayoutY(y);
-
+}
+public double getStartx() {
+	return startx;
+}
+public double getStarty() {
+	return starty;
+	
 }
 public Answer getAnswer() {
 	return this.answer;
