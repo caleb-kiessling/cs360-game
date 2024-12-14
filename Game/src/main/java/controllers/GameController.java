@@ -150,6 +150,7 @@ public class GameController extends BaseController implements KeyListener, GameE
     public void loadQuestion() {
         QLabel.setText(lvlControl.getCurrentQuestion().getText());
         List<Answer> answers = lvlControl.getCurrentQuestion().getAnswers();
+        
 
         List<Asteroid> asteroids = new ArrayList<>(); // Keep track of all asteroids
         for (int i = 0; i < answers.size(); i++) {
@@ -214,7 +215,7 @@ public class GameController extends BaseController implements KeyListener, GameE
     public void asteroidFall(Asteroid a) {
     	 //animation of asteroid
         TranslateTransition asteroidFall=new TranslateTransition();
-        asteroidFall.setDuration(Duration.seconds(20)); // Animation duration
+        asteroidFall.setDuration(Duration.seconds(30)); // Animation duration
         asteroidFall.setNode(a.getVisual()); // The node to animate
         asteroidFall.setByY(700); // Move 1000px down
         asteroidFall.setCycleCount(1); // play animation once
@@ -284,9 +285,12 @@ public class GameController extends BaseController implements KeyListener, GameE
 
 	@Override
 	public void onCorrectAnswerShot() {
-        System.out.println("Loading the next question...");
-        lvlControl.nextQuestion();
-        loadQuestion();
+
+		if (lvlControl.getQuestionCount() < lvlControl.getCurrentLevel().getQuestions().size()) {
+			System.out.println("Loading the next question...");
+			lvlControl.nextQuestion();
+			loadQuestion();
+		}
 		ammo++;
 	}
 }

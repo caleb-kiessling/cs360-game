@@ -123,8 +123,8 @@ public class GameLoop {
             System.out.println("Asteroid shot");
         } else if ((obj1 instanceof Asteroid && obj2 instanceof Spaceship)||(obj2 instanceof Asteroid && obj1 instanceof Spaceship)) {
             // End the game if asteroid hits the player
-            System.out.println("Game Over!");
-            stop(); // Stop the game loop
+            System.out.println("ship hit");
+           // stop(); // Stop the game loop
             
         }
         // Add other collision scenarios here

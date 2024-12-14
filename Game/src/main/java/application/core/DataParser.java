@@ -109,6 +109,10 @@ public class DataParser {
 				
 				if (line.startsWith("#Level")) {
 					if (current != null) {
+						if (currentQuestion != null) {
+	                        current.addQuestion(currentQuestion);
+	                        currentQuestion = null; 
+	                    }
 						levels.add(current);
 					}
 					
