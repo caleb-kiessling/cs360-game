@@ -14,6 +14,7 @@ private StackPane stackpane;
 private Answer answer;
 private double startx;
 private double starty;
+private boolean isShot;
 
 public Asteroid(Answer answer) {
 	circle= new Circle(50);
@@ -53,6 +54,12 @@ public double getStarty() {
 }
 public Answer getAnswer() {
 	return this.answer;
+}
+public void setIsShot(boolean isShot) {
+	this.isShot=isShot;
+}
+public boolean getIsShot() {
+	return isShot;
 }
 @Override
 public Bounds getBoundInParent() {

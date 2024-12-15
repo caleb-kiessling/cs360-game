@@ -9,10 +9,12 @@ public class LevelControl {
 	private int questionCount;
 	private Question currentQuestion;
 	private List<Level> levels;
+	private int wins;
 	
 	public LevelControl() {
 		try {
 			this.parser=new DataParser("levels.txt","playerdata.txt");
+			wins=parser.getWins();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.print("File Not Found");
@@ -34,16 +36,15 @@ public class LevelControl {
 		return levels.get(lvlNum);
 	}
 	public void nextQuestion() {
-		  if (questionCount < levels.get(lvlNum).getQuestions().size() - 1) {
-		        questionCount++;
-		        System.out.println("questionCount: " + questionCount);
-		        System.out.println("questionSize: " + levels.get(lvlNum).getQuestions().size());
-		    } else {
-		        System.out.println("No more questions in this level.");
-		        loadNextLevel();
-		        //here is where we can signal to end the level/game when out of questions
-		    }
+		questionCount++;
 		
+	}
+	public boolean hasNextQuestion() {
+		if(questionCount==levels.get(lvlNum).getQuestions().size()-1) {
+			return false;
+		}else {
+			return true;
+		}
 	}
 	public void loadLevel(int lvlNum){
     questionCount=0;
@@ -52,5 +53,16 @@ public class LevelControl {
 	public void loadNextLevel() {
 		lvlNum++;
 		loadLevel(lvlNum);
+	}
+	public void setPlayerData( int destroyed, int losses, int correct) {
+		try {
+			parser.setCorrect(correct);
+			parser.setDestroyed(destroyed);
+			parser.setLosses(losses);
+			parser.setWins(this.wins);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

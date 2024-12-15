@@ -55,6 +55,10 @@ public class GameController extends BaseController implements KeyListener, GameE
     private int health;
     private LevelControl lvlControl;
     private List<TranslateTransition> asteroidTransitions = new ArrayList<>();
+	private int correct;
+	private int destroyed;
+	private int losses;
+	private boolean lose;
 
     
     @FXML
@@ -63,13 +67,12 @@ public class GameController extends BaseController implements KeyListener, GameE
     	lvlControl=new LevelControl();
     	gameLoop=new GameLoop(GameContent);
         gameLoop.setGameEventListener(this); // Set the listener
-        
-        
+	    
         
     	ammo=5;
     	health=3;
     	score=0;
-		updateHUD(score,ammo,health);
+		updateHUD();
 		
     	player = new Spaceship();
         GameContent.getChildren().add(player.getVisual());
@@ -152,7 +155,7 @@ public class GameController extends BaseController implements KeyListener, GameE
     	
 
     }
-    
+    //loads the question into the label and answers into the asteroid
     public void loadQuestion() {
         QLabel.setText(lvlControl.getCurrentQuestion().getText());
         List<Answer> answers = lvlControl.getCurrentQuestion().getAnswers();
@@ -228,11 +231,17 @@ public class GameController extends BaseController implements KeyListener, GameE
         asteroidFall.setCycleCount(1); // play animation once
         asteroidFall.setAutoReverse(false); // Reverse direction after each cycle
         asteroidFall.setOnFinished(event -> {//used to destroy asteroid object once animation is finished
-        	if(a.getAnswer().isCorrect()) {
+        	if(a.getAnswer().isCorrect()&&!(a.getIsShot())) {
             	restartQuestion();//restarts question if correct answer is not shot
+            }else {
+            	GameContent.getChildren().remove(a.getVisual());
+            	removeGameObject(a);
+            	asteroidTransitions.remove(asteroidFall);
+            	if(a.getIsShot()) {
+            		destroyed++;
+            	}
             }
-        	GameContent.getChildren().remove(a.getVisual());
-        	removeGameObject(a);
+        	
         });
         asteroidTransitions.add(asteroidFall);
         asteroidFall.play();
@@ -270,7 +279,7 @@ public class GameController extends BaseController implements KeyListener, GameE
     	}
     }
 
-    public void updateHUD(int score, int ammo, int health) {
+    public void updateHUD() {
         ScoreLabel.setText("Score: " + score);
         AmmoLabel.setText("Ammo: " + ammo);
         HealthLabel.setText("Health: "+health);
@@ -304,10 +313,14 @@ public class GameController extends BaseController implements KeyListener, GameE
 	@Override
 	public void onCorrectAnswerShot() {
 		ammo++;
+		correct++;
 		score+=10;
-		System.out.println("Loading the next question...");
+		if(!lvlControl.hasNextQuestion()) {
+			lose=false;
+			endLevel();
+		}
 		lvlControl.nextQuestion();
-		updateHUD(score,ammo,health);
+		updateHUD();
 		loadQuestion();
 	}
 	public void onShipAsteroidCollision() {
@@ -322,13 +335,16 @@ public class GameController extends BaseController implements KeyListener, GameE
 		    fadeOut.play();
 			health--;
 			System.out.println("Ship has taken Damage");
-			updateHUD(score,ammo,health);
+			updateHUD();
 			
 		}else{
 			System.out.println("Gameover");
-			System.exit(0);
+			losses++;
+			lose=true;
+			endLevel();
 		}
 	}
+	//restarts the question if the correct answer is not shot and goes outside playzone
 	public void restartQuestion() {
 	    // Stop all asteroid animations
 	    for (TranslateTransition transition : asteroidTransitions) {
@@ -343,9 +359,18 @@ public class GameController extends BaseController implements KeyListener, GameE
 	        removeGameObject(a);
 	    }
 	    asteroids.clear(); // Clear the asteroid list in the game loop
-
+	    health--;
 	    // Reload the question
 	    loadQuestion();
+	}
+	public void endLevel() {
+		lvlControl.setPlayerData(destroyed, losses, correct);
+		if(lose==false) {
+			System.out.print("won");
+		}else {
+			System.out.print("lost");
+		}
+		System.exit(0);
 	}
 }
 

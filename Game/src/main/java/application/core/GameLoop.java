@@ -135,6 +135,7 @@ public class GameLoop {
         		}else {
         			System.out.println("not correct");
         		}
+        		((Asteroid) obj2).setIsShot(true);
         	}else if(obj1 instanceof Asteroid) {
         		if(((Asteroid) obj1).getAnswer().isCorrect()) {
         			System.out.println("correct");
@@ -144,6 +145,8 @@ public class GameLoop {
         		}else {
         			System.out.println("not correct");
         		}
+        		((Asteroid) obj1).setIsShot(true);
+
         	}
             removeGameObject(obj1);
             removeGameObject(obj2);
