@@ -3,7 +3,6 @@ package application;
 import java.io.IOException;
 
 import application.core.DataParser;
-import application.core.Level;
 import controllers.BaseController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,28 +10,29 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class Main extends Application {
-	private static final int HEIGHT = 450; // these will be implemented if
-										   //we can find a scale to scale to the screen size.
-	private static final int WIDTH = 600;
+	public static final int HEIGHT = 450;
+	public static final int WIDTH = 600;
 	
-	private static final String TITLE = "Syntax Blasters";
+	public static final String TITLE = "Syntax Blasters";
 	
     private Stage primaryStage;
     private BaseController currentController;
     private DataParser parser;
-    private Level currentLevel;
+    
+    private MediaPlayer persistentSound;
 
     @Override
     public void start(Stage stage) throws Exception {
         try {
             this.parser = new DataParser("levels.txt", "playerdata.txt");
-            this.currentLevel = null;
 
             this.primaryStage = stage;
             this.primaryStage.setTitle(TITLE);
-            this.primaryStage.setResizable(false);
+            this.primaryStage.setResizable(true);
             this.primaryStage.getIcons().add(new Image("icon.png"));
 
             this.primaryStage.show();
@@ -45,6 +45,44 @@ public class Main extends Application {
         }
     }
 
+    public void playSimpleSound(String name, double volume) {
+    	 try {
+    		 Media sound = new Media(Main.class.getResource("/" + name + ".wav").toString());
+             MediaPlayer mediaPlayer = new MediaPlayer(sound);
+             mediaPlayer.setOnEndOfMedia(mediaPlayer::dispose);
+             mediaPlayer.setVolume(volume);
+             mediaPlayer.play();
+         } catch (Exception e) {
+             System.err.println("Error playing sound effect: " + e.getMessage());
+         }
+    }
+    
+    public void playPersistentSound(String name, double volume, boolean loop) {
+    	this.stopPersistentSound();
+    	
+    	try {
+    		 Media sound = new Media(Main.class.getResource("/" + name + ".wav").toString());
+             persistentSound = new MediaPlayer(sound);
+             persistentSound.setVolume(volume);
+             
+             if (loop) {
+            	 persistentSound.setCycleCount(MediaPlayer.INDEFINITE);
+             }
+             
+             persistentSound.play();
+    	} catch(Exception e){
+            System.err.println("Error playing persistent sound: " + e.getMessage());
+    	}
+    }
+    
+    public void stopPersistentSound() {
+    	 if (persistentSound != null) {
+    		 persistentSound.stop();
+    		 persistentSound.dispose();
+    		 persistentSound = null;
+         }
+    }
+    
     public void showScene(String fxml) throws Exception {
         if (this.currentController != null) {
             this.currentController.clean();
@@ -54,16 +92,11 @@ public class Main extends Application {
         this.primaryStage.setScene(scene);
 
         this.primaryStage.setForceIntegerRenderScale(true);
-        //this.primaryStage.setHeight(HEIGHT);
-        //this.primaryStage.setWidth(WIDTH);
-    }
-
-    public void setLevel(Level level) {
-        this.currentLevel = level;
-    }
-
-    public Level getLevel() {
-        return this.currentLevel; // Call this to get level data in the GameController.
+        
+        if (this.currentController != null) {
+            this.currentController.setMain(this);
+            this.currentController.start();
+        }
     }
 
     public DataParser getParser() {
@@ -75,11 +108,7 @@ public class Main extends Application {
         Parent parent = fxmlLoader.load();
 
         currentController = fxmlLoader.getController();
-        if (currentController != null) {
-            currentController.setMain(this);
-            currentController.start();
-        }
-
+        
         return parent;
     }
     

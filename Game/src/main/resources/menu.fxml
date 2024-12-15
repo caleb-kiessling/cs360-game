@@ -8,7 +8,7 @@
 
 <VBox id="background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" spacing="10.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
    <children>
-      <Label stylesheets="@style.css" text="MENU">
+      <Label fx:id="MenuLabel" stylesheets="@style.css" text="MENU">
          <font>
             <Font name="Arial Black" size="25.0" />
          </font>
@@ -16,7 +16,7 @@
             <Insets />
          </opaqueInsets>
       </Label>
-      <Button fx:id="PlayButton" mnemonicParsing="false" onAction="#SwitchSceneToLevels" stylesheets="@style.css" text="Play" />
+      <Button fx:id="LevelButton" mnemonicParsing="false" onAction="#SwitchSceneToLevels" stylesheets="@style.css" text="Play" />
       <Button fx:id="StatsButton" mnemonicParsing="false" onAction="#SwitchSceneStatistics" stylesheets="@style.css" text="Statistics" />
       <Button fx:id="ExitButton" mnemonicParsing="false" onAction="#EndProgram" stylesheets="@style.css" text="Exit">
          <opaqueInsets>

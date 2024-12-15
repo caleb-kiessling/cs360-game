@@ -17,6 +17,9 @@ public class StatsController extends BaseController {
     private Label destroyedLabel;
 
     @FXML
+    private Label levelLabel;
+    
+    @FXML
     private Label lossLabel;
 
     @FXML
@@ -24,12 +27,22 @@ public class StatsController extends BaseController {
 
     @FXML
     void ReturnToMenu(ActionEvent event) throws Exception {
+        this.main.playSimpleSound("blipSelect", 0.05);
+        
+        
+
     	this.switchScene("menu");
     }
     public void start() {
     	DataParser parser = this.main.getParser();
-    	
+
+    	levelLabel.setText(String.format("Level: %d", parser.getLevel()));
     	winLabel.setText(String.format("Wins: %d", parser.getWins()));
+        lossLabel.setText(String.format("Losses: %d", parser.getLosses()));
+        correctLabel.setText(String.format("Correct Answers: %d", parser.getCorrect()));
+        
+        destroyedLabel.setVisible(false);
+        //destroyedLabel.setText(String.format("Asteroids Destroyed: %d", parser.getDestroyed()));
     }
     
     @Override

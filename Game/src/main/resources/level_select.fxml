@@ -7,14 +7,31 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LevelSelectController">
+<VBox id="background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" spacing="20.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LevelSelectController">
    <children>
-      <Label stylesheets="@style.css" text="LEVEL NAME">
+      <Label fx:id="LevelLabel" stylesheets="@style.css" text="LEVEL 1">
          <font>
             <Font size="29.0" />
          </font>
       </Label>
-      <HBox fx:id="Contents" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" />
+      <Label fx:id="ContentsLabel" stylesheets="@style.css" text="CONTENTS">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+         <children>
+            <Button fx:id="PlayButton" mnemonicParsing="false" onAction="#PlayGameAction" stylesheets="@style.css" text="PLAY">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+            <Button fx:id="NewGameButton" mnemonicParsing="false" onAction="#NewGameAction" stylesheets="@style.css" text="NEW GAME">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+         </children></HBox>
       <Button fx:id="BackButton" mnemonicParsing="false" onAction="#ReturnToMenu" stylesheets="@style.css" text="MENU">
          <opaqueInsets>
             <Insets />

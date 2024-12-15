@@ -1,11 +1,11 @@
 package application.core;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Question {
+	private int speed;
     private String text;
-    private List<Answer> answers;
+    private ArrayList<Answer> answers;
 
     public Question(String text) {
         this.text = text;
@@ -13,22 +13,30 @@ public class Question {
     }
 
     public String getText() {
-        return text;
+        return this.text;
     }
 
     public void setText(String text) {
         this.text = text;
     }
+    
+    public void setSpeed(int speed) {
+    	this.speed = speed;
+    }
+    
+    public int getSpeed() {
+    	return this.speed;
+    }
 
     public void addAnswer(Answer answer) {
-        answers.add(answer);
+        this.answers.add(answer);
     }
 
     public int getAnswerCount() {
-        return answers.size();
+        return this.answers.size();
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public ArrayList<Answer> getAnswers() {
+        return this.answers;
     }
 }

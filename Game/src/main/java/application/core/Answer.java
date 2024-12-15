@@ -10,10 +10,10 @@ public class Answer {
     }
 
     public String getText() {
-        return text;
+        return this.text;
     }
 
     public boolean isCorrect() {
-        return isCorrect;
+        return this.isCorrect;
     }
 }
