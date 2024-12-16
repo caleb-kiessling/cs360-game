@@ -64,7 +64,7 @@ public class GameController extends BaseController {
 
     @Override
     public void start() {
-    	PauseMenu.setVisible(false);
+    	this.SetPauseMenuState(false); 
     	
         this.gameLoop = new GameLoop();
 
@@ -81,13 +81,9 @@ public class GameController extends BaseController {
         this.setLevel();
         
         gameLoop.setUpdateCallback(() -> {
-			try {
-				updateGame();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			updateGame();
 		});
+        
         gameLoop.start();
 
         GameContent.requestFocus();
@@ -145,16 +141,20 @@ public class GameController extends BaseController {
                 if (!hasAsteroidBelts) {
                 	this.gameLoop.stop();
                 	
-                	this.menuStatus = "Completed";
+                	this.menuStatus = "Complete";
                 	
-                	this.PauseMenu.setVisible(true);
+                	this.SetPauseMenuState(true);
                 }
             }
         }
     }
 
+    private void SetPauseMenuState(boolean state) {
+    	this.PauseMenu.setVisible(state);
+    	this.PauseButton.setVisible(!state);
+    }
     
-    public void updateHUD() throws IOException {
+    public void updateHUD() {
         ScoreLabel.setText("Score: " + score);
         AmmoLabel.setText("Ammo: " + ammo);
         HealthLabel.setText("Health: " + health);
@@ -165,9 +165,13 @@ public class GameController extends BaseController {
 
 		if (this.menuStatus.equals("Menu")) {
 		    this.ContinueButton.setText("Resume");
-		} else if (this.menuStatus.equals("Completed")) {
+		} else if (this.menuStatus.equals("Complete")) {
 			
-			data.setWins(data.getWins() + 1);
+			try {
+				data.setWins(data.getWins() + 1);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 			int levelNumber = this.level.getLevelNumber();
 			
@@ -180,13 +184,17 @@ public class GameController extends BaseController {
 			
 		} else if (this.menuStatus.equals("Failed")) {
 			
-			data.setLosses(data.getLosses() + 1);
+			try {
+				data.setLosses(data.getLosses() + 1);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
 		    this.ContinueButton.setText("Retry Level");
 		}
     }
 
-    private void updateGame() throws IOException {
+    private void updateGame() {
         this.checkCollisions();
         this.removeOffScreenObjects();        
         this.progressLevel();  
@@ -228,7 +236,7 @@ public class GameController extends BaseController {
         }
     }
     
-    private void checkCollisions() throws IOException {
+    private void checkCollisions() {
         ArrayList<GameObject> objectsToRemove = new ArrayList<>();
         ArrayList<Asteroid> asteroidsToRemove = new ArrayList<>();
 
@@ -252,7 +260,11 @@ public class GameController extends BaseController {
                             objectsToRemove.add(belt);
                             GameContent.getChildren().remove(belt.getNode());
                             
-                			data.setCorrect(data.getCorrect() + 1);
+                			try {
+								data.setCorrect(data.getCorrect() + 1);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
                             
                             break;
                         } else {
@@ -270,7 +282,11 @@ public class GameController extends BaseController {
                                 ammo += AMMO_REWARD;
                                 score += SCORE_REWARD;
                                 
-                    			data.setCorrect(data.getCorrect() + 1);
+                    			try {
+									data.setCorrect(data.getCorrect() + 1);
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
 
                                 objectsToRemove.add(belt);
                                 GameContent.getChildren().remove(belt.getNode());
@@ -366,27 +382,31 @@ public class GameController extends BaseController {
         if (this.health <= 0) {
         	this.gameLoop.pause();
         	
-        	this.PauseMenu.setVisible(true);
+        	this.SetPauseMenuState(true);
+        	
         	this.menuStatus = "Failed";
         }
     }
     
     @FXML
-    void ContinueAction(ActionEvent event) throws IOException {
+    void ContinueAction(ActionEvent event) {
         this.main.playSimpleSound("blipSelect", 0.05);
 
     	if (this.menuStatus.equals("Menu")) {
-    	    this.PauseMenu.setVisible(false);
-    	    this.PauseButton.setVisible(true);
+    		this.SetPauseMenuState(false);
 
     	    this.gameLoop.resume();
-    	} else if (this.menuStatus.equals("Completed")) {
+    	} else if (this.menuStatus.equals("Complete")) {
     		DataParser data = this.main.getParser();
 			int levelNumber = this.level.getLevelNumber();
 			
 		    
 			if (levelNumber < data.getLevelCount()) {
-				data.setLevel(levelNumber + 1);
+				try {
+					data.setLevel(levelNumber + 1);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 			
     	    this.switchScene("game_area");
@@ -396,7 +416,7 @@ public class GameController extends BaseController {
     }
 
     @FXML
-    void MenuAction(ActionEvent event) throws IOException {
+    void MenuAction(ActionEvent event) {
         this.main.playSimpleSound("blipSelect", 0.05);
 
  		DataParser data = this.main.getParser();
@@ -404,7 +424,11 @@ public class GameController extends BaseController {
 		
 	    
 		if (levelNumber < data.getLevelCount()) {
-			data.setLevel(levelNumber + 1);
+			try {
+				data.setLevel(levelNumber + 1);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
         
     	this.switchScene("menu");
@@ -418,9 +442,7 @@ public class GameController extends BaseController {
     	if (!this.gameLoop.isPaused()) {
     		this.gameLoop.pause();
     		
-    		this.PauseMenu.setVisible(true);  	
-    		
-    		this.PauseButton.setVisible(false);
+    		this.SetPauseMenuState(true);
     	}
     }
 }

@@ -69,7 +69,7 @@ public class LevelSelectController extends BaseController {
     		this.PlayButton.setText("Play Again");
     	}
     	
-    	this.ContentsLabel.setText(level.getTopic());
+    	this.ContentsLabel.setText("Topic: " + level.getTopic());
     	
     	this.LevelLabel.setText(String.format("Level %d", levelNumber));
     }

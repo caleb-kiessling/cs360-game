@@ -1,6 +1,6 @@
 #Level 1
 SPEED: 2.0
-CONTENT: STUFF
+CONTENT: Variables
 
 Q: What is the capital of France?
 S: 105
