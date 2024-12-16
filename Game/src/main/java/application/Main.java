@@ -15,8 +15,8 @@ import javafx.scene.media.MediaPlayer;
 
 public class Main extends Application {
     // Window dimensions
-    public static final int HEIGHT = 450;
-    public static final int WIDTH = 600;
+    public static final int HEIGHT = 650;
+    public static final int WIDTH = 800;
 
     // Application title
     public static final String TITLE = "Syntax Blasters";

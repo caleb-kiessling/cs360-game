@@ -1,153 +1,245 @@
 #Level 1
 SPEED: 2.0
-CONTENT: CS160 Variables
+CONTENT: Variables
 
 Q: What is a variable in Java?
-S: 100
-A: A container for storing data values [CORRECT]
-A: A reserved word in Java
-A: A part of the Java Virtual Machine
+S: 50
+A: A container for data [CORRECT]
+A: A reserved word
+A: A part of JVM
+A: A letter
 
-Q: Which of the following is a valid variable declaration in Java?
-S: 105
-A: int myVariable; [CORRECT]
-A: int 123variable;
-A: int my-variable;
+Q: How do you declare an integer variable in Java?
+S: 50
+A: int x; [CORRECT]
+A: int x = ;
+A: int x:
+A: integer x;
 
-Q: What keyword is used to declare a constant variable in Java?
-S: 200
+Q: What keyword is used to declare a constant in Java?
+S: 51
 A: final [CORRECT]
 A: const
 A: static
+A: constant
 
-Q: What data type would you use for a variable that holds a whole number in Java?
-S: 100
-A: int [CORRECT]
-A: double
+Q: What data type holds true or false values in Java?
+S: 55
+A: boolean [CORRECT]
+A: int
 A: char
+A: double
 
-Q: How do you assign the value 10 to a variable x in Java?
-S: 100
-A: x = 10; [CORRECT]
-A: x == 10;
-A: x := 10;
+Q: How do you assign a value to a variable in Java?
+S: 55
+A: x = 5; [CORRECT]
+A: x == 5;
+A: assign x = 5;
+A: x := 5;
 
-Q: What is the default value of an uninitialized int variable in Java?
-S: 200
-A: 0 [CORRECT]
+Q: What is the default value of an uninitialized double in Java?
+S: 50
+A: 0.0 [CORRECT]
 A: null
 A: Undefined
+A: NaN
 
 Q: Which of the following is not a valid data type in Java?
-S: 200
+S: 45
 A: number [CORRECT]
 A: float
 A: boolean
+A: long
 
-Q: What is the size of a double in Java?
-S: 200
-A: 64 bits [CORRECT]
+Q: What is the size of a char in Java?
+S: 50
+A: 16 bits [CORRECT]
+A: 8 bits
 A: 32 bits
-A: 16 bits
+A: 64 bits
 
-Q: Which of the following is a valid way to declare and initialize a variable in one line in Java?
-S: 100
-A: int x = 5; [CORRECT]
-A: int x: 5;
-A: x = int 5;
-
-Q: What is the default value of a boolean variable in Java?
-S: 200
-A: false [CORRECT]
-A: true
-A: null
-
-Q: How do you declare a variable that can hold a single character in Java?
-S: 100
-A: char myChar; [CORRECT]
-A: string myChar;
-A: int myChar;
-
-Q: Which keyword is used to declare a variable that can be accessed from other classes in Java?
-S: 400
+Q: Which keyword declares a variable accessible by all classes?
+S: 40
 A: public [CORRECT]
 A: private
-A: protected
+A: static
+A: final
 
-Q: What type of variable can hold a decimal number in Java?
-S: 200
-A: double [CORRECT]
-A: int
-A: char
-
-Q: What does it mean when a variable is declared as private in Java?
-S: 100
-A: It can only be accessed within the same class [CORRECT]
-A: It is shared across all instances of the class
-A: It cannot be initialized
-
-Q: What is the naming convention for variables in Java?
-S: 100
-A: Use camelCase for variable names [CORRECT]
-A: Use ALL_CAPS for variable names
-A: Use hyphens in variable names
-
-Q: What happens if you try to assign a double value to an int variable in Java without casting?
-S: 200
-A: A compilation error occurs [CORRECT]
-A: The decimal part is automatically truncated
-A: The value is automatically converted
-
-Q: How do you declare an array of integers in Java?
-S: 200
-A: int[] myArray; [CORRECT]
-A: array int myArray;
-A: int myArray[];
+---
 
 #Level 2
-SPEED: 3.0
-CONTENT: STUFF2
+SPEED: 2.0
+CONTENT: Conditional Statements
 
-Q: What is the smallest prime number?
+Q: Which keyword is used for decision-making in Java?
 S: 50
-A: 2 [CORRECT]
-A: 1
-A: 3
-A: 10
-A: TOAD
+A: if [CORRECT]
+A: loop
+A: class
+A: void
 
-Q: What is the currency used in Japan?
-S: 100
-A: Yen [CORRECT]
-A: Dollar
-A: Euro
-
-Q: Who painted the Mona Lisa?
-S: 100
-A: Leonardo da Vinci [CORRECT]
-A: Vincent van Gogh
-A: Pablo Picasso
-
-Q: What is the freezing point of water?
-S: 100
-A: 0°C [CORRECT]
-A: -1°C
-A: 100°C
-
-Q: In what year did the Titanic sink?
-S: 100
-A: 1912 [CORRECT]
-A: 1905
-A: 1920
-
-Q: What gas do plants absorb from the atmosphere?
+Q: How do you check if two values are equal in Java?
 S: 60
-A: Carbon dioxide [CORRECT]
-A: Oxygen
-A: Nitrogen
+A: == [CORRECT]
+A: =
+A: equals()
+A: !=
 
-Q: What is the largest mammal in the world?
-S: 100
-A: Blue whale [CORRECT]
-A: African elephant
-A: Giraffe
+Q: What will `if (true) {}` do?
+S: 80
+A: Always execute [CORRECT]
+A: Never execute
+A: Error
+A: False
+
+Q: What is the syntax for an else statement in Java?
+S: 40
+A: else { } [CORRECT]
+A: elseif { }
+A: elif { }
+A: otherwise { }
+
+Q: Which operator means 'not equal' in Java?
+S: 45
+A: != [CORRECT]
+A: ==
+A: <=
+A: =
+
+Q: Which statement ends a switch case in Java?
+S: 60
+A: break; [CORRECT]
+A: exit;
+A: stop;
+A: end;
+
+Q: What does `if (x > 10 && x < 20)` check?
+S: 50
+A: x is between 10 and 20 [CORRECT]
+A: x is equal to 10 or 20
+A: x is less than 10
+A: x is greater than 20
+
+Q: What does `else if` allow you to do?
+S: 55
+A: Check multiple conditions [CORRECT]
+A: Check one condition
+A: End a program
+A: Repeat a loop
+
+Q: What does `switch` work with in Java?
+S: 60
+A: int, char, String [CORRECT]
+A: float, double
+A: Arrays
+A: Objects
+
+---
+
+#Level 3
+SPEED: 4
+CONTENT: Loops
+
+Q: Which loop executes at least once?
+S: 70
+A: do-while [CORRECT]
+A: while
+A: for
+A: if
+
+Q: What does `for (int i = 0; i < 5; i++)` do?
+S: 70
+A: Iterates 5 times [CORRECT]
+A: Iterates 4 times
+A: Runs forever
+A: Infinite loop
+
+Q: What is the syntax for a while loop in Java?
+S: 50
+A: while (condition) { } [CORRECT]
+A: loop (condition) { }
+A: while { condition }
+A: while(condition):
+
+Q: What does `break` do in a loop?
+S: 40
+A: Exits the loop [CORRECT]
+A: Skips iteration
+A: Restarts loop
+A: Ends program
+
+Q: What does `continue` do in a loop?
+S: 70
+A: Skips to next iteration [CORRECT]
+A: Exits loop
+A: Repeats iteration
+A: Stops program
+
+Q: What keyword creates an infinite loop in Java?
+S: 60
+A: while(true) [CORRECT]
+A: loop(true)
+A: for(;;)
+A: repeat(true)
+
+Q: Which loop is best for a known number of iterations?
+S: 80
+A: for [CORRECT]
+A: while
+A: do-while
+A: if
+
+---
+
+#Level 4
+SPEED: 3.0
+CONTENT: Classes
+
+Q: What keyword defines a class in Java?
+S: 40
+A: class [CORRECT]
+A: object
+A: public
+A: main
+
+Q: How do you create an object of a class?
+S: 42
+A: new ClassName(); [CORRECT]
+A: create ClassName();
+A: make(ClassName);
+A: ClassName obj();
+
+Q: What is a constructor in Java?
+S: 50
+A: Initializes objects [CORRECT]
+A: For loops
+A: A data type
+A: Main method
+
+Q: What keyword allows a class to inherit another?
+S: 55
+A: extends [CORRECT]
+A: implements
+A: inherits
+A: super
+
+Q: How do you declare a class in Java?
+S: 55
+A: class MyClass { } [CORRECT]
+A: public class();
+A: declare MyClass();
+A: MyClass();
+
+Q: What does `this` refer to in Java?
+S: 55
+A: Current object [CORRECT]
+A: Parent object
+A: Main method
+A: A variable
+
+Q: What is the purpose of an abstract class in Java?
+S: 60
+A: To provide a base for subclasses [CORRECT]
+A: To define constants
+A: To execute code
+A: To create objects

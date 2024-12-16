@@ -40,7 +40,7 @@ public class AsteroidBelt extends GameObject {
 
     // Create asteroids for the belt
     private void createAsteroids() {
-        ArrayList<Answer> answers = this.question.getAnswers(); // Get all answers
+        ArrayList<Answer> answers = this.question.getShuffledAnswers(); // Get all answers
         int count = answers.size(); // Number of asteroids to create
 
         double spacing = Main.WIDTH / (count + 1); // Calculate spacing for asteroids

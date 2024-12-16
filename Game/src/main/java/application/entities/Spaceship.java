@@ -11,7 +11,7 @@ public class Spaceship extends GameObject {
     public static int WIDTH = 25;
 
     private boolean isMoving = false;
-    private double speed = 175;
+    private double speed = 425;
     private boolean movingUp = false;
     private boolean movingDown = false;
     private boolean movingLeft = false;

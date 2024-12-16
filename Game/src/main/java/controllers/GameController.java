@@ -423,7 +423,7 @@ public class GameController extends BaseController {
 		int levelNumber = this.level.getLevelNumber();
 		
 	    
-		if (levelNumber < data.getLevelCount()) {
+		if (levelNumber < data.getLevelCount() && this.menuStatus.equals("Complete")) {
 			try {
 				data.setLevel(levelNumber + 1);
 			} catch (IOException e) {

@@ -1,6 +1,7 @@
 package application.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Question {
 	private int speed;
@@ -38,5 +39,11 @@ public class Question {
 
     public ArrayList<Answer> getAnswers() {
         return this.answers;
+    }
+    
+    public ArrayList<Answer> getShuffledAnswers() {
+        ArrayList<Answer> shuffledAnswers = new ArrayList<>(this.answers);
+        Collections.shuffle(shuffledAnswers);
+        return shuffledAnswers;
     }
 }
