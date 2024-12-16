@@ -35,7 +35,7 @@ public class Main extends Application {
             // Set up the primary stage
             this.primaryStage = stage;
             this.primaryStage.setTitle(TITLE);
-            this.primaryStage.setResizable(true);
+            this.primaryStage.setResizable(false);
             this.primaryStage.getIcons().add(new Image("icon.png"));
 
             // Show the stage and load the menu scene
