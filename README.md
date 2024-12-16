@@ -1,4 +1,5 @@
 Unfortunately we were unsuccessful in compiling this game as a .jar file, JavaFx does not seem to want to work when it comes to it and after spending over four hours on trying to solve this, we got nowhere. 
+This could have been just us, but I think it is just due to how weirdly structured Eclipse IDE and JavaFX is. There are multiple various ways to get it working and all the methods we tried were unsuccessful.
 
 To run this game you will need to download the following tools: https://eclipseide.org/ and https://github.com/apps/desktop.
 
