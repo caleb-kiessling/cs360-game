@@ -1,36 +1,78 @@
 #Level 1
 SPEED: 2.0
-CONTENT: Variables
+CONTENT: STUFF
 
-Q: What is the capital of France?
-S: 105
-A: Paris [CORRECT]
-A: London
-A: Berlin
-
-Q: What is the largest planet in our solar system?
+Q: What is a variable in Java?
 S: 100
-A: Jupiter [CORRECT]
-A: Saturn
-A: Earth
+A: A container for storing data values [CORRECT]
+A: A reserved word in Java
+A: A part of the Java Virtual Machine
 
-Q: What is the boiling point of water at sea level?
+Q: Which of the following is a valid variable declaration in Java?
+S: 105
+A: int myVariable; [CORRECT]
+A: int 123variable;
+A: int my-variable;
+
+Q: What keyword is used to declare a constant variable in Java?
 S: 200
-A: 100°C [CORRECT]
-A: 90°C
-A: 120°C
+A: final [CORRECT]
+A: const
+A: static
 
-Q: Who wrote "Romeo and Juliet"?
+Q: What data type would you use for a variable that holds a whole number in Java?
+S: 100
+A: int [CORRECT]
+A: double
+A: char
+
+Q: How do you assign the value 10 to a variable x in Java?
+S: 100
+A: x = 10; [CORRECT]
+A: x == 10;
+A: x := 10;
+
+Q: What is the default value of an uninitialized int variable in Java?
+S: 200
+A: 0 [CORRECT]
+A: null
+A: Undefined
+
+Q: Which of the following is not a valid data type in Java?
+S: 200
+A: number [CORRECT]
+A: float
+A: boolean
+
+Q: What is the size of a double in Java?
+S: 200
+A: 64 bits [CORRECT]
+A: 32 bits
+A: 16 bits
+
+Q: Which of the following is a valid way to declare and initialize a variable in one line in Java?
+S: 100
+A: int x = 5; [CORRECT]
+A: int x: 5;
+A: x = int 5;
+
+Q: What is the default value of a boolean variable in Java?
+S: 200
+A: false [CORRECT]
+A: true
+A: null
+
+Q: How do you declare a variable that can hold a single character in Java?
+S: 100
+A: char myChar; [CORRECT]
+A: string myChar;
+A: int myChar;
+
+Q: Which keyword is used to declare a variable that can be accessed from other classes in Java?
 S: 400
-A: William Shakespeare [CORRECT]
-A: Charles Dickens
-A: Mark Twain
-
-Q: What is the chemical symbol for gold?
-S: 600
-A: Au [CORRECT]
-A: Ag
-A: Pb
+A: public [CORRECT]
+A: private
+A: protected
 
 #Level 2
 SPEED: 3.0
