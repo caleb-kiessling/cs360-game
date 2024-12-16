@@ -1,6 +1,6 @@
 #Level 1
 SPEED: 2.0
-CONTENT: STUFF
+CONTENT: CS160 Variables
 
 Q: What is a variable in Java?
 S: 100
@@ -73,6 +73,36 @@ S: 400
 A: public [CORRECT]
 A: private
 A: protected
+
+Q: What type of variable can hold a decimal number in Java?
+S: 200
+A: double [CORRECT]
+A: int
+A: char
+
+Q: What does it mean when a variable is declared as private in Java?
+S: 100
+A: It can only be accessed within the same class [CORRECT]
+A: It is shared across all instances of the class
+A: It cannot be initialized
+
+Q: What is the naming convention for variables in Java?
+S: 100
+A: Use camelCase for variable names [CORRECT]
+A: Use ALL_CAPS for variable names
+A: Use hyphens in variable names
+
+Q: What happens if you try to assign a double value to an int variable in Java without casting?
+S: 200
+A: A compilation error occurs [CORRECT]
+A: The decimal part is automatically truncated
+A: The value is automatically converted
+
+Q: How do you declare an array of integers in Java?
+S: 200
+A: int[] myArray; [CORRECT]
+A: array int myArray;
+A: int myArray[];
 
 #Level 2
 SPEED: 3.0
